@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <UsingTask TaskName="CustomBuildTasks.MyBuildTask" 
+             AssemblyFile="$(SolutionDir)\deploy\CustomBuildTasks.dll" Runtime="CurrentRuntime" />
+
+  <Target Name="MoveDllsToRuntime" AfterTargets="Build">
+    <Message Importance="high" Text="====== [MySecurity Target] 正在将依赖移动到 Runtime 目录 ======" />
+    
+
+    <ItemGroup>
+      <MyOutputDlls Include="$(TargetDir)*.dll" Exclude="$(TargetDir)Runtime\**\*.*" />
+    </ItemGroup>
+    
+    <Move SourceFiles="@(MyOutputDlls)" DestinationFolder="$(TargetDir)Runtime\" OverwriteReadOnlyFiles="true" />
+    
+    
+    <MyBuildTask  TargetDirectory="$(TargetDir)" />
+  </Target>
+
+    <Target Name="CleanRuntimeFolder" AfterTargets="Clean">
+    <Message Importance="high" Text="====== [MySecurity Target] 正在执行理 Runtime 目录 ======" />
+    
+    <ItemGroup>
+      <FilesToClean Include="$(TargetDir)Runtime\**\*.*" />
+    </ItemGroup>
+    <Delete Files="@(FilesToClean)" TreatErrorsAsWarnings="true" />
+    <RemoveDir Directories="$(TargetDir)Runtime" Condition="Exists('$(TargetDir)Runtime')" />
+  </Target>
+
+</Project>
