@@ -28,32 +28,51 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new AntdUI.Button();
+            this.picPrewiew = new System.Windows.Forms.PictureBox();
+            this.imageBox1 = new WindowsFormsApp1.ImageBox();
+            ((System.ComponentModel.ISupportInitialize)(this.picPrewiew)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // picPrewiew
             // 
-            this.button1.Location = new System.Drawing.Point(164, 99);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(349, 190);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
+            this.picPrewiew.Location = new System.Drawing.Point(796, 179);
+            this.picPrewiew.Name = "picPrewiew";
+            this.picPrewiew.Size = new System.Drawing.Size(273, 242);
+            this.picPrewiew.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picPrewiew.TabIndex = 1;
+            this.picPrewiew.TabStop = false;
+            this.picPrewiew.Click += new System.EventHandler(this.picPrewiew_Click);
+            // 
+            // imageBox1
+            // 
+            this.imageBox1.Image = global::WindowsFormsApp1.Properties.Resources.cat;
+            this.imageBox1.Location = new System.Drawing.Point(12, 12);
+            this.imageBox1.Name = "imageBox1";
+            this.imageBox1.Size = new System.Drawing.Size(532, 328);
+            this.imageBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.imageBox1.TabIndex = 0;
+            this.imageBox1.TabStop = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(1138, 542);
+            this.Controls.Add(this.picPrewiew);
+            this.Controls.Add(this.imageBox1);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.picPrewiew)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private AntdUI.Button button1;
+        private ImageBox imageBox1;
+        private System.Windows.Forms.PictureBox picPrewiew;
     }
 }
 

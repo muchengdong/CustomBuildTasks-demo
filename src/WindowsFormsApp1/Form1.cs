@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenCvSharp.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,19 @@ namespace WindowsFormsApp1
         public Form1()
         {
             InitializeComponent();
+
+            this.imageBox1.OnDrawComplete += ImageBox1_OnDrawComplete;
+        }
+
+        private void ImageBox1_OnDrawComplete(OpenCvSharp.Mat obj)
+        {
+
+            picPrewiew.Image = obj.ToBitmap();
+        }
+
+        private void picPrewiew_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
