@@ -35,13 +35,19 @@
             this.inputRight = new AntdUI.InputNumber();
             this.inputBottom = new AntdUI.InputNumber();
             this.button1 = new AntdUI.Button();
-            this.sliceContainer1 = new WindowsFormsApp1.Controls.SlideGlassLayout();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.dynamicPhysicalRulerControl2 = new WindowsFormsApp1.Controls.DynamicPhysicalRulerControl();
+            this.dynamicPhysicalRulerControl1 = new WindowsFormsApp1.Controls.DynamicPhysicalRulerControl();
+            this.sliceContainer1 = new WindowsFormsApp1.Controls.PhysicalSlideGlassLayout();
+            this.panel2 = new AntdUI.Panel();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sliceContainer1)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // select1
             // 
-            this.select1.Location = new System.Drawing.Point(531, 74);
+            this.select1.Location = new System.Drawing.Point(766, 68);
             this.select1.Name = "select1";
             this.select1.Radius = 0;
             this.select1.Size = new System.Drawing.Size(154, 41);
@@ -51,7 +57,7 @@
             // 
             // gridPanel1
             // 
-            this.gridPanel1.Location = new System.Drawing.Point(36, 386);
+            this.gridPanel1.Location = new System.Drawing.Point(710, 384);
             this.gridPanel1.Name = "gridPanel1";
             this.gridPanel1.Size = new System.Drawing.Size(300, 300);
             this.gridPanel1.TabIndex = 2;
@@ -60,7 +66,7 @@
             // inputLeft
             // 
             this.inputLeft.AlwaysShowControl = true;
-            this.inputLeft.Location = new System.Drawing.Point(531, 121);
+            this.inputLeft.Location = new System.Drawing.Point(766, 115);
             this.inputLeft.Name = "inputLeft";
             this.inputLeft.Radius = 0;
             this.inputLeft.ShowControl = false;
@@ -73,7 +79,7 @@
             // 
             this.inputTop.AlwaysShowControl = true;
             this.inputTop.EnabledValueTextChange = true;
-            this.inputTop.Location = new System.Drawing.Point(531, 215);
+            this.inputTop.Location = new System.Drawing.Point(766, 209);
             this.inputTop.Name = "inputTop";
             this.inputTop.Radius = 0;
             this.inputTop.ShowControl = false;
@@ -86,7 +92,7 @@
             // 
             this.inputRight.AlwaysShowControl = true;
             this.inputRight.EnabledValueTextChange = true;
-            this.inputRight.Location = new System.Drawing.Point(531, 168);
+            this.inputRight.Location = new System.Drawing.Point(766, 162);
             this.inputRight.Name = "inputRight";
             this.inputRight.Radius = 0;
             this.inputRight.ShowControl = false;
@@ -99,7 +105,7 @@
             // 
             this.inputBottom.AlwaysShowControl = true;
             this.inputBottom.EnabledValueTextChange = true;
-            this.inputBottom.Location = new System.Drawing.Point(531, 270);
+            this.inputBottom.Location = new System.Drawing.Point(766, 264);
             this.inputBottom.Name = "inputBottom";
             this.inputBottom.Radius = 0;
             this.inputBottom.ShowControl = false;
@@ -111,30 +117,80 @@
             // button1
             // 
             this.button1.BorderWidth = 1F;
-            this.button1.Location = new System.Drawing.Point(670, 271);
+            this.button1.Location = new System.Drawing.Point(905, 265);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 41);
             this.button1.TabIndex = 7;
             this.button1.Text = "button1";
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.panel2);
+            this.panel1.Controls.Add(this.dynamicPhysicalRulerControl2);
+            this.panel1.Controls.Add(this.dynamicPhysicalRulerControl1);
+            this.panel1.Location = new System.Drawing.Point(24, 46);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(400, 400);
+            this.panel1.TabIndex = 10;
+            // 
+            // dynamicPhysicalRulerControl2
+            // 
+            this.dynamicPhysicalRulerControl2.BackColor = System.Drawing.Color.White;
+            this.dynamicPhysicalRulerControl2.CornerOffset = 30;
+            this.dynamicPhysicalRulerControl2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.dynamicPhysicalRulerControl2.Location = new System.Drawing.Point(0, 20);
+            this.dynamicPhysicalRulerControl2.Margin = new System.Windows.Forms.Padding(0);
+            this.dynamicPhysicalRulerControl2.Name = "dynamicPhysicalRulerControl2";
+            this.dynamicPhysicalRulerControl2.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.dynamicPhysicalRulerControl2.ScaleColor = System.Drawing.Color.Black;
+            this.dynamicPhysicalRulerControl2.Size = new System.Drawing.Size(20, 380);
+            this.dynamicPhysicalRulerControl2.TabIndex = 12;
+            this.dynamicPhysicalRulerControl2.Text = "dynamicPhysicalRulerControl2";
+            // 
+            // dynamicPhysicalRulerControl1
+            // 
+            this.dynamicPhysicalRulerControl1.BackColor = System.Drawing.Color.White;
+            this.dynamicPhysicalRulerControl1.CornerOffset = 30;
+            this.dynamicPhysicalRulerControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dynamicPhysicalRulerControl1.Location = new System.Drawing.Point(0, 0);
+            this.dynamicPhysicalRulerControl1.Name = "dynamicPhysicalRulerControl1";
+            this.dynamicPhysicalRulerControl1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.dynamicPhysicalRulerControl1.ScaleColor = System.Drawing.Color.Black;
+            this.dynamicPhysicalRulerControl1.Size = new System.Drawing.Size(400, 20);
+            this.dynamicPhysicalRulerControl1.TabIndex = 11;
+            this.dynamicPhysicalRulerControl1.Text = "dynamicPhysicalRulerControl1";
+            // 
             // sliceContainer1
             // 
             this.sliceContainer1.BorderColor = System.Drawing.Color.Gray;
             this.sliceContainer1.CurrentSlideGlassType = null;
-            this.sliceContainer1.Location = new System.Drawing.Point(36, 37);
+            this.sliceContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sliceContainer1.Location = new System.Drawing.Point(0, 0);
             this.sliceContainer1.Margin = new System.Windows.Forms.Padding(0);
             this.sliceContainer1.Name = "sliceContainer1";
-            this.sliceContainer1.Size = new System.Drawing.Size(300, 300);
+            this.sliceContainer1.ReadOnly = false;
+            this.sliceContainer1.Size = new System.Drawing.Size(380, 380);
             this.sliceContainer1.TabIndex = 0;
             this.sliceContainer1.TabStop = false;
             this.sliceContainer1.Click += new System.EventHandler(this.sliceContainer1_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.sliceContainer1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(20, 20);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(380, 380);
+            this.panel2.TabIndex = 13;
+            this.panel2.Text = "panel2";
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1060, 718);
+            this.ClientSize = new System.Drawing.Size(1117, 718);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.inputBottom);
             this.Controls.Add(this.inputRight);
@@ -142,18 +198,19 @@
             this.Controls.Add(this.inputLeft);
             this.Controls.Add(this.gridPanel1);
             this.Controls.Add(this.select1);
-            this.Controls.Add(this.sliceContainer1);
             this.Name = "Form2";
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);
+            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sliceContainer1)).EndInit();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Controls.SlideGlassLayout sliceContainer1;
+        private Controls.PhysicalSlideGlassLayout sliceContainer1;
         private AntdUI.Select select1;
         private AntdUI.GridPanel gridPanel1;
         private AntdUI.InputNumber inputLeft;
@@ -161,5 +218,9 @@
         private AntdUI.InputNumber inputRight;
         private AntdUI.InputNumber inputBottom;
         private AntdUI.Button button1;
+        private System.Windows.Forms.Panel panel1;
+        private Controls.DynamicPhysicalRulerControl dynamicPhysicalRulerControl1;
+        private Controls.DynamicPhysicalRulerControl dynamicPhysicalRulerControl2;
+        private AntdUI.Panel panel2;
     }
 }

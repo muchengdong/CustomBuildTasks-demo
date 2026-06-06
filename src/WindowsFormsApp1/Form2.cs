@@ -23,6 +23,9 @@ namespace WindowsFormsApp1
             this.InitSelect();
             this.InitGridPanel();
             this.sliceContainer1.BorderColor = Color.Green;
+            this.sliceContainer1.Cursor = Cursors.Cross;
+            this.dynamicPhysicalRulerControl1.CornerOffset = 20;
+            this.dynamicPhysicalRulerControl2.CornerOffset = 0;
         }
 
         private void InitSelect()
@@ -41,7 +44,7 @@ namespace WindowsFormsApp1
             var slideGlassTypes = sliceContainer1.SlideGlassTypes.Reverse<SlideGlassType>();
             foreach (var item in slideGlassTypes)
             {
-                var slideGlassLayout = new SlideGlassLayout() { Tag = item, CurrentSlideGlassType = item, Dock = DockStyle.Fill };
+                var slideGlassLayout = new PhysicalSlideGlassLayout() { Tag = item, CurrentSlideGlassType = item, Dock = DockStyle.Fill };
                 slideGlassLayout.Cursor = Cursors.Hand;
                 slideGlassLayout.ReadOnly = true;
                 slideGlassLayout.Click += _slideGlassLayout_Click;
@@ -53,7 +56,7 @@ namespace WindowsFormsApp1
 
         private void _slideGlassLayout_Click(object sender, EventArgs e)
         {
-            if (sender is SlideGlassLayout slideGlassLayout)
+            if (sender is PhysicalSlideGlassLayout slideGlassLayout)
             {
                 slideGlassLayout.BorderColor = Color.Green;
                 this._currentSlideGlassType = slideGlassLayout.CurrentSlideGlassType;
@@ -62,7 +65,7 @@ namespace WindowsFormsApp1
                 {
                     foreach (var item in control.Controls)
                     {
-                        if (item is SlideGlassLayout layout && layout != slideGlassLayout)
+                        if (item is PhysicalSlideGlassLayout layout && layout != slideGlassLayout)
                         {
                             layout.BorderColor = Color.Gray;
                         }

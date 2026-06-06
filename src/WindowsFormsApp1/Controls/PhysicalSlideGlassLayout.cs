@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -10,13 +11,13 @@ using System.Windows.Input;
 
 namespace WindowsFormsApp1.Controls
 {
-    internal class SlideGlassLayout : PictureBox
+    internal class PhysicalSlideGlassLayout : PictureBox
     {
         private static SizeF _maxSlideGlassSize = new SizeF(110.0F, 110.0F); // 110x110毫米
         private static SizeF _slideGlassType1 = _maxSlideGlassSize; // 110x110毫米
         private static SizeF _slideGlassType2 = new SizeF(25.0F, 75.0F); // 25x75毫米
-        private const float _borderWidthPx = 4.0F; // 边框宽度 像素
-        private const float _paddingPx = 0.0f;     // 内边距 像素
+        private const float _borderWidthPx = 2.0F; // 边框宽度 像素
+        private const float _paddingPx = 3.0f;     // 内边距 像素
         private const float _minSlideGlassSize = 3.0F; // 黄色框至少保留 3mm
         private SlideGlassType _currentSlideGlassType; // 当前切片类型（110x110、25x75等）
 
@@ -26,6 +27,7 @@ namespace WindowsFormsApp1.Controls
 
         private ScanAreaBoundary _scanAreaBoundaryMaxLimit = new ScanAreaBoundary(0); // 最大扫描区域边界 像素（左、上、右、下）
 
+        private PointF _currentMousePos = PointF.Empty;
         private bool _readOnly = false; // 是否只读（只读时不允许修改扫描区域边界）
 
         // 所有切片类型列表（如 110x110、25x75 等），每个类型下包含对应的切片配置列表
@@ -105,16 +107,45 @@ namespace WindowsFormsApp1.Controls
         public ScanAreaBoundary ScanAreaBoundaryMaxLimit { get => _scanAreaBoundaryMaxLimit; set => _scanAreaBoundaryMaxLimit = value; }
         public bool ReadOnly { get => _readOnly; set => _readOnly = value; }
 
-        public SlideGlassLayout()
+        public PhysicalSlideGlassLayout()
         {
             this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer |
+                ControlStyles.ResizeRedraw |
+                ControlStyles.UserPaint |
+                ControlStyles.AllPaintingInWmPaint, true);
             this.Paint += _slideGlassLayout_Paint;
+            this.MouseMove += _slideGlassLayout_MouseMove;
+            this.MouseLeave += _slideGlassLayout_MouseLeave;
+        }
+
+        private void _slideGlassLayout_MouseLeave(object sender, EventArgs e)
+        {
+            this._currentMousePos = PointF.Empty;
+            this.Invalidate();
+        }
+
+        private void _slideGlassLayout_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            this._currentMousePos  = e.Location;
+            this.Invalidate(); 
+
         }
 
         private void _slideGlassLayout_Paint(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            if (this._currentMousePos != Point.Empty && !this._readOnly) {
+
+                using (Pen p = new Pen(Color.Green, 1))
+                {
+                    p.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+                    g.DrawLine(p, 0, _currentMousePos.Y, this.Width, _currentMousePos.Y);
+                    g.DrawLine(p, _currentMousePos.X, 0, _currentMousePos.X, this.Height);
+                }
+            }
 
             var pbW = this.Width;
             var pbH = this.Height;
@@ -202,8 +233,8 @@ namespace WindowsFormsApp1.Controls
                     using (Brush selectSelectBrush = new SolidBrush(Color.FromArgb(120, 255, 235, 59)))
                     using (Pen yellowBorderPen = new Pen(Color.FromArgb(200, 255, 215, 0), 2.0F))
                     {
-                        g.FillRectangle(selectSelectBrush, yellowStartX, yellowStartY, yellowWidth, yellowHeight);
-                        g.DrawRectangle(yellowBorderPen, yellowStartX, yellowStartY, yellowWidth, yellowHeight);
+                        //g.FillRectangle(selectSelectBrush, yellowStartX, yellowStartY, yellowWidth, yellowHeight);
+                        //g.DrawRectangle(yellowBorderPen, yellowStartX, yellowStartY, yellowWidth, yellowHeight);
                     }
                 }
             }
