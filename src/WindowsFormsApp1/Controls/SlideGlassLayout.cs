@@ -152,7 +152,7 @@ namespace WindowsFormsApp1.Controls
 
 
             // 遍历当前切片类型下的所有切片配置，动态绘制每个切片配置对应的绿框和黄框
-            if (_currentSlideGlassType != null )
+            if (_currentSlideGlassType != null)
             {
 
                 foreach (var currentConfig in _currentSlideGlassType.SlideGlassPhyConfigs)
@@ -173,7 +173,10 @@ namespace WindowsFormsApp1.Controls
                         }
                     }
 
-                    if (_readOnly) return; // 如果是只读模式，不绘制黄色选区框
+                    if (_readOnly)
+                    {
+                        continue; // 如果是只读模式，不绘制黄色选区框
+                    }
 
                     // 计算用户在当前有效工作区内部输入的像素缩进量
                     float leftPx = _scanAreaBoundary.Left * pxPerMmX;
