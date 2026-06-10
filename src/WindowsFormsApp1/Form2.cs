@@ -109,6 +109,8 @@ namespace WindowsFormsApp1
         private void Form2_Load(object sender, EventArgs e)
         {
 
+
+
             var root = new RootDirectory(@"d:/test");
             root.Create();
             root.Config.Create();
