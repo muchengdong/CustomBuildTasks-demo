@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.Controls;
+using WindowsFormsApp1.Demo;
 
 namespace WindowsFormsApp1
 {
@@ -108,6 +109,10 @@ namespace WindowsFormsApp1
         private void Form2_Load(object sender, EventArgs e)
         {
 
+            var root = new RootDirectory(@"d:/test");
+            root.Create();
+            root.Config.Create();
+            root.Workspace.Date.Create();
         }
 
         private void button1_Click(object sender, EventArgs e)

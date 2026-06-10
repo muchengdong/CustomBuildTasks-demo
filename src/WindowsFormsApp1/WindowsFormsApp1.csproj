@@ -53,6 +53,7 @@
     <Compile Include="Controls\PhysicalSlideGlassLayout.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Demo\DirectoryBase.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
