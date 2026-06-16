@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OpenCvSharp;
+using OpenCvSharp.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -33,7 +35,7 @@ namespace WindowsFormsApp1.Controls
         private bool _isDragging = false; // 是否正在左键框选
 
         // 【新增】鼠标右键平移相关的物理像素坐标
-        private Point _lastMousePosition; // 记录上一次鼠标的屏幕像素位置
+        private System.Drawing.Point _lastMousePosition; // 记录上一次鼠标的屏幕像素位置
         private bool _isPanning = false;      // 是否正在右键平移画布
 
         // 提供外部传入图片的属性
@@ -59,7 +61,7 @@ namespace WindowsFormsApp1.Controls
         }
 
         // 辅助函数：物理像素坐标 -> 画布逻辑坐标
-        private PointF GetLogicalPoint(Point mouseLocation)
+        private PointF GetLogicalPoint(System.Drawing.Point mouseLocation)
         {
             if (_transformMatrix == null) return mouseLocation;
             using (Matrix invertMatrix = _transformMatrix.Clone())
@@ -239,12 +241,44 @@ namespace WindowsFormsApp1.Controls
                             float cellX = col * _cellSizePx;
                             float cellY = row * _cellSizePx;
 
+
                             g.FillRectangle(selectSelectBrush, cellX, cellY, _cellSizePx, _cellSizePx);
                             g.DrawRectangle(cellBorderPen, cellX, cellY, _cellSizePx, _cellSizePx);
+
+                            //var imgMat = Cv2.ImRead(@"D:\CustomBuildTasks-demo\src\WindowsFormsApp1\Resources\test.jpg");
+                            //this.customImageBox1.Image = imgMat.ToBitmap();
+                            DrawThumbImg(g, cellX, cellY, @"D:\CustomBuildTasks-demo\src\WindowsFormsApp1\Resources\test.jpg");    
+
                         }
                     }
                 }
             }
+        }
+
+        private void DrawThumbImg(Graphics g, float cellX, float cellY, string imgPath) 
+        {
+
+            var imgMat = Cv2.ImRead(@"D:\CustomBuildTasks-demo\src\WindowsFormsApp1\Resources\test.jpg");
+            float desiredTargetGap = 1.0F;
+
+            // 核心公式：逻辑内边距 = 目标物理像素 / 当前缩放比例
+            // 这样可以确保矩阵乘以这个逻辑值后，在屏幕上还原出来的永远是 desiredTargetGap 像素
+            float logGap = desiredTargetGap / _scale;
+
+            // 计算图片在逻辑坐标系下的实际起始位置和宽高
+            float drawX = cellX + logGap;
+            float drawY = cellY + logGap;
+
+            // 左右、上下各扣除一份内边距，所以宽高要减去 2 倍的 logGap
+            float drawW = _cellSizePx - (logGap * 2);
+            float drawH = _cellSizePx - (logGap * 2);
+
+            // 为防止浮点数精度在特定缩放比下导致微小像素溢出，依然建议开启半像素偏移
+            g.PixelOffsetMode = PixelOffsetMode.Half;
+            g.InterpolationMode = InterpolationMode.NearestNeighbor;
+
+            // 渲染图片
+            g.DrawImage(imgMat.ToBitmap(), drawX, drawY, drawW, drawH);
         }
 
         private void DrawGrid(Graphics g)
