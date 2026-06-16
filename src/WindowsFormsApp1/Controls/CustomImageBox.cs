@@ -16,7 +16,7 @@ namespace WindowsFormsApp1.Controls
         private float _scale = 1.0F;
         private float _pyhCellSize = 3.5F; // 物理格子尺寸 毫米
         private const float _maxBoxSize = 110.0F; // 最大物理尺寸 毫米
-        private float _cellSize; // 像素
+        private float _cellSizePx; // 像素
         private int _parentW; // 父容器宽度 像素
         private int _parentH; // 父容器高度 像素
 
@@ -92,8 +92,8 @@ namespace WindowsFormsApp1.Controls
             if (_isDragging)
             {
                 _currentPoint = GetLogicalPoint(e.Location);
-                _endCol = (int)Math.Floor(_currentPoint.X / _cellSize);
-                _endRow = (int)Math.Floor(_currentPoint.Y / _cellSize);
+                _endCol = (int)Math.Floor(_currentPoint.X / _cellSizePx);
+                _endRow = (int)Math.Floor(_currentPoint.Y / _cellSizePx);
             }
 
             this.Invalidate();
@@ -108,9 +108,9 @@ namespace WindowsFormsApp1.Controls
                 _startPoint = GetLogicalPoint(e.Location);
                 _currentPoint = _startPoint;
 
-                _startCol = (int)Math.Floor(_currentPoint.X / _cellSize);
+                _startCol = (int)Math.Floor(_currentPoint.X / _cellSizePx);
                 _endCol = _startCol;
-                _startRow = (int)Math.Floor(_currentPoint.Y / _cellSize);
+                _startRow = (int)Math.Floor(_currentPoint.Y / _cellSizePx);
                 _endRow = _startRow;
 
                 this.Invalidate();
@@ -130,8 +130,8 @@ namespace WindowsFormsApp1.Controls
             if (_isDragging)
             {
                 _currentPoint = GetLogicalPoint(e.Location);
-                _endCol = (int)Math.Floor(_currentPoint.X / _cellSize);
-                _endRow = (int)Math.Floor(_currentPoint.Y / _cellSize);
+                _endCol = (int)Math.Floor(_currentPoint.X / _cellSizePx);
+                _endRow = (int)Math.Floor(_currentPoint.Y / _cellSizePx);
 
                 this.Invalidate();
             }
@@ -178,7 +178,7 @@ namespace WindowsFormsApp1.Controls
                 _parentW = parentClientSize.Width;
             }
 
-            _cellSize = _parentH / _maxBoxSize * _pyhCellSize;
+            _cellSizePx = _parentH / _maxBoxSize * _pyhCellSize;
 
             // 应用我们维护好的变换矩阵（包含缩放和平移）
             g.Transform = _transformMatrix;
@@ -202,7 +202,13 @@ namespace WindowsFormsApp1.Controls
 
             var imageX = (_parentW - _image.Width) / 2;
             var imageY = (_parentH - _image.Height) / 2;
-            g.DrawImage(_image, imageX, imageY, _image.Width, _image.Height);
+
+            // 算出多个格子
+            var cols = (int)Math.Ceiling((float)imageX / _cellSizePx);
+            // 网格大小 * 网格数量 = 需要平移的距离,避免图片左边卡在格子中间区域
+            var newX = cols * _cellSizePx;
+
+            g.DrawImage(_image, newX, 0, _image.Width, _image.Height);
         }
 
         private void DrawSelectedGrid(Graphics g)
@@ -230,11 +236,11 @@ namespace WindowsFormsApp1.Controls
                     {
                         for (int col = minCol; col <= maxCol; col++)
                         {
-                            float cellX = col * _cellSize;
-                            float cellY = row * _cellSize;
+                            float cellX = col * _cellSizePx;
+                            float cellY = row * _cellSizePx;
 
-                            g.FillRectangle(selectSelectBrush, cellX, cellY, _cellSize, _cellSize);
-                            g.DrawRectangle(cellBorderPen, cellX, cellY, _cellSize, _cellSize);
+                            g.FillRectangle(selectSelectBrush, cellX, cellY, _cellSizePx, _cellSizePx);
+                            g.DrawRectangle(cellBorderPen, cellX, cellY, _cellSizePx, _cellSizePx);
                         }
                     }
                 }
@@ -269,15 +275,15 @@ namespace WindowsFormsApp1.Controls
                 float visibleBottom = screenCorners[1].Y;
 
                 // 根据可见边界，动态计算应该绘制的起始行/列和结束行/列（通过 Math.Floor 和 Math.Ceiling 确保完全覆盖屏幕）
-                int startCol = (int)Math.Floor(visibleLeft / _cellSize);
-                int endCol = (int)Math.Ceiling(visibleRight / _cellSize);
-                int startRow = (int)Math.Floor(visibleTop / _cellSize);
-                int endRow = (int)Math.Ceiling(visibleBottom / _cellSize);
+                int startCol = (int)Math.Floor(visibleLeft / _cellSizePx);
+                int endCol = (int)Math.Ceiling(visibleRight / _cellSizePx);
+                int startRow = (int)Math.Floor(visibleTop / _cellSizePx);
+                int endRow = (int)Math.Ceiling(visibleBottom / _cellSizePx);
 
                 //动态绘制可见区域内的列线
                 for (int col = startCol; col <= endCol; col++)
                 {
-                    float x = col * _cellSize;
+                    float x = col * _cellSizePx;
                     // 线的起点和终点延伸到当前可见区域的上下边界
                     g.DrawLine(gridPen, x, visibleTop, x, visibleBottom);
                 }
@@ -285,7 +291,7 @@ namespace WindowsFormsApp1.Controls
                 // 动态绘制可见区域内的行线
                 for (int row = startRow; row <= endRow; row++)
                 {
-                    float y = row * _cellSize;
+                    float y = row * _cellSizePx;
                     // 线的起点和终点延伸到当前可见区域的左右边界
                     g.DrawLine(gridPen, visibleLeft, y, visibleRight, y);
                 }
