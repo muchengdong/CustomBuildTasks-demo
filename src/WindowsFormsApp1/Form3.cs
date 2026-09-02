@@ -18,16 +18,32 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
 
-            this.customImageBox1.Dock = DockStyle.Fill;
+            //this.customImageBox1.Dock = DockStyle.Fill;
 
             var imgMat = Cv2.ImRead(@"D:\CustomBuildTasks-demo\src\WindowsFormsApp1\Resources\test.jpg");
             this.customImageBox1.Image = imgMat.ToBitmap();
 
         }
 
+
+
         private void customImageBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void panel1_Click(object sender, EventArgs e)
+        {
+
+
+            GridAbsolutePerfectSerpentine.test2233();
+
+           //var ctrls =  gridPanel1.Controls;
+
+           // foreach (var item in ctrls)
+           // {
+           //     Console.WriteLine(item);
+           // }
         }
     }
 }

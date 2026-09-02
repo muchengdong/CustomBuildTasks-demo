@@ -30,11 +30,13 @@
         {
             this.panel1 = new AntdUI.Panel();
             this.customImageBox1 = new WindowsFormsApp1.Controls.CustomImageBox();
+            this.gridPanel1 = new AntdUI.GridPanel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.gridPanel1);
             this.panel1.Controls.Add(this.customImageBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -45,15 +47,25 @@
             this.panel1.Size = new System.Drawing.Size(1006, 629);
             this.panel1.TabIndex = 0;
             this.panel1.Text = "panel1";
+            this.panel1.Click += new System.EventHandler(this.panel1_Click);
             // 
             // customImageBox1
             // 
-            this.customImageBox1.Location = new System.Drawing.Point(258, 12);
+            this.customImageBox1.Image = null;
+            this.customImageBox1.Location = new System.Drawing.Point(531, 89);
             this.customImageBox1.Name = "customImageBox1";
-            this.customImageBox1.Size = new System.Drawing.Size(537, 604);
+            this.customImageBox1.Size = new System.Drawing.Size(403, 424);
             this.customImageBox1.TabIndex = 0;
             this.customImageBox1.Text = "customImageBox1";
             this.customImageBox1.Click += new System.EventHandler(this.customImageBox1_Click);
+            // 
+            // gridPanel1
+            // 
+            this.gridPanel1.Location = new System.Drawing.Point(94, 130);
+            this.gridPanel1.Name = "gridPanel1";
+            this.gridPanel1.Size = new System.Drawing.Size(146, 146);
+            this.gridPanel1.TabIndex = 1;
+            this.gridPanel1.Text = "gridPanel1";
             // 
             // Form3
             // 
@@ -72,5 +84,6 @@
 
         private AntdUI.Panel panel1;
         private Controls.CustomImageBox customImageBox1;
+        private AntdUI.GridPanel gridPanel1;
     }
 }
